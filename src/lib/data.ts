@@ -103,6 +103,7 @@ export const projects = [
       "A personal AI assistant for my development workflow. Persistent memory with semantic search, tool use, and a clean web UI. Inspired the agentic assistant I later built at Atlas Copco.",
     tags: ["AI Agents", "Python", "React", "TypeScript"],
     github: "https://github.com/ydb-solutions/openclaw",
+    video: null,
     featured: true,
   },
   {
@@ -111,6 +112,7 @@ export const projects = [
       "Stock intelligence platform that evaluates companies through the lens of legendary investors (Graham, Buffett, Lynch, O'Neil, Dividend). Radar chart visualisation with per-profile deep-dive dashboards.",
     tags: ["Python", "React", "GCP", "GitHub Actions", "Finance"],
     github: "https://github.com/ydb-solutions/lens",
+    video: "/videos/lens-demo.mp4",
     featured: true,
   },
   {
@@ -119,6 +121,7 @@ export const projects = [
       "Turns PDFs into structured study material: summaries, Q&A flashcards, and spaced-repetition review powered by AI.",
     tags: ["Python", "React", "GCP", "GitHub Actions", "AI/ML"],
     github: "https://github.com/ydb-solutions/memry",
+    video: null,
     featured: true,
   },
   {
@@ -127,6 +130,7 @@ export const projects = [
       "Personal finance tracking and analysis app with expense categorisation, investment tracking, and visualisations.",
     tags: ["Python", "React", "GCP"],
     github: "https://github.com/ydb-solutions/finance_app",
+    video: null,
     featured: false,
   },
   {
@@ -135,6 +139,7 @@ export const projects = [
       "End-to-end cloud platform for monitoring and controlling a global fleet of industrial compressors. Real-time telemetry via MQTT → IoT Hub → WebSockets → live dashboards. Remote commands, firmware updates, and embedded C++ on Yocto.",
     tags: ["Azure", "Python", "React", "C++", "Yocto", "MQTT", "IoT Hub"],
     github: null,
+    video: null,
     featured: true,
     professional: true,
   },
@@ -144,6 +149,7 @@ export const projects = [
       "Azure DevOps task that auto-detects the stack, runs security scanners, triages findings with an LLM agent, then enters an agentic fix-validate loop until everything passes and auto-generates a PR.",
     tags: ["Python", "Azure AI Foundry", "Semantic Kernel", "Azure DevOps"],
     github: null,
+    video: null,
     featured: true,
     professional: true,
   },
@@ -153,6 +159,7 @@ export const projects = [
       "Deployed multiple instances of an internal knowledge app across Atlas Copco departments, each with a custom Azure AI Search index over their documents. Built with Prompt Flow for orchestration and evaluation.",
     tags: ["Python", "Azure AI Search", "Prompt Flow", "RAG", "Azure"],
     github: null,
+    video: null,
     featured: false,
     professional: true,
   },
@@ -162,6 +169,7 @@ export const projects = [
       "Built a production data platform from scratch using the medallion architecture — PySpark, dbt, Delta Lake, Unity Catalog, DLT — ingesting SQL, JSON, XML, Kafka, and text in batch and streaming modes.",
     tags: ["Databricks", "PySpark", "dbt", "Delta Lake", "Azure", "Kafka"],
     github: null,
+    video: null,
     featured: false,
     professional: true,
   },

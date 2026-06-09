@@ -2,8 +2,46 @@
 
 import { motion } from "framer-motion";
 import { projects } from "@/lib/data";
-import { Lock, ExternalLink } from "lucide-react";
+import { Lock, ExternalLink, Play } from "lucide-react";
 import { GithubIcon } from "@/components/BrandIcons";
+import { useRef, useState } from "react";
+
+function VideoPreview({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setPlaying(true);
+    }
+  };
+
+  return (
+    <div className="relative rounded-lg overflow-hidden mb-4 bg-slate-800 aspect-video">
+      <video
+        ref={videoRef}
+        src={src}
+        className="w-full h-full object-cover"
+        controls={playing}
+        playsInline
+        preload="metadata"
+        onEnded={() => setPlaying(false)}
+      />
+      {!playing && (
+        <button
+          onClick={handlePlay}
+          className="absolute inset-0 flex items-center justify-center bg-slate-950/60 hover:bg-slate-950/40 transition-colors group/play"
+          aria-label="Play demo"
+        >
+          <span className="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center group-hover/play:bg-cyan-400 transition-colors shadow-lg">
+            <Play size={20} className="text-slate-950 ml-0.5" fill="currentColor" />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function Projects() {
   const featured = projects.filter((p) => p.featured);
@@ -40,6 +78,8 @@ export default function Projects() {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="group p-6 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col"
             >
+              {project.video && <VideoPreview src={project.video} />}
+
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   {project.professional && (
