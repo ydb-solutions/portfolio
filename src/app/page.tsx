@@ -21,7 +21,7 @@ export default function Home() {
         <Contact />
       </main>
       <footer className="py-8 px-6 border-t border-slate-800 text-center text-slate-600 text-sm font-mono">
-        <span>ydb-solutions.com</span>
+        <span>portfolio.ydb-solutions.com</span>
       </footer>
     </>
   );

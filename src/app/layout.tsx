@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: "Yves De Boeck — Data & AI Engineer",
     description:
       "Building production-grade data platforms, cloud infrastructure, and AI systems.",
-    url: "https://ydb-solutions.com",
+    url: "https://portfolio.ydb-solutions.com",
     siteName: "Yves De Boeck Portfolio",
     type: "website",
   },
