@@ -61,7 +61,7 @@ export default function About() {
               industry to work on concrete problems at scale.
             </p>
             <p>
-              Over the past five years I&apos;ve worked across energy, healthcare,
+              Over the past six years I&apos;ve worked across energy, healthcare,
               and industrial IoT — building everything from embedded device
               firmware to production ML pipelines. I&apos;m currently looking to
               bring this experience to an ambitious team in{" "}

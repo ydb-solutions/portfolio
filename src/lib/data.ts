@@ -7,7 +7,7 @@ export const profile = {
   relocating: ["Toronto", "Zurich", "Australia"],
   email: "yves.deboeck@ydb-solutions.com",
   github: "https://github.com/ydb-solutions",
-  linkedin: "https://www.linkedin.com/in/yves-de-boeck",
+  linkedin: "https://www.linkedin.com/in/yvesdeboeck",
   education: {
     degree: "MSc Computer Science Engineering (magna cum laude)",
     institution: "University of Antwerp",
