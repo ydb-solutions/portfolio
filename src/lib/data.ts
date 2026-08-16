@@ -4,7 +4,6 @@ export const profile = {
   tagline:
     "Building production-grade data platforms, cloud infrastructure, and AI systems that solve real industrial problems.",
   location: "Belgium",
-  relocating: ["Toronto", "Zurich", "Australia"],
   email: "yves.deboeck@ydb-solutions.com",
   github: "https://github.com/ydb-solutions",
   linkedin: "https://www.linkedin.com/in/yvesdeboeck",
@@ -97,6 +96,16 @@ export const experiences = [
 ];
 
 export const projects = [
+  {
+    name: "Space Insights",
+    description:
+      "Space data platform on Databricks running three live pipelines: NASA FIRMS thermal detections aggregated into H3 hexagons on a draggable globe, Sentinel-2 burn-scar detection over four monitored regions, and Mars rover telemetry anomaly detection scored against NASA's expert-labelled benchmark. Fully infrastructure-as-code, zero cloud cost.",
+    tags: ["Databricks", "dbt", "Terraform", "PySpark", "MLflow", "H3", "MapLibre"],
+    github: null,
+    video: null,
+    writeup: "/blog/every-fire-on-earth",
+    featured: true,
+  },
   {
     name: "OpenClaw",
     description:

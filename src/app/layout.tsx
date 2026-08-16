@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Yves De Boeck — Data & AI Engineer",
   description:
-    "Data & AI Engineer with expertise in Databricks, Azure, RAG systems, and LLM agents. Based in Belgium, open to relocation to Toronto, Zurich, or Australia.",
+    "Data & AI Engineer with expertise in Databricks, Azure, RAG systems, and LLM agents. Based in Belgium.",
   keywords: [
     "Data Engineer",
     "AI Engineer",

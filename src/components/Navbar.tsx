@@ -6,6 +6,7 @@ const links = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Writing", href: "/blog" },
   { label: "Skills", href: "#skills" },
   { label: "Certifications", href: "#certifications" },
   { label: "Contact", href: "#contact" },
@@ -51,7 +52,7 @@ export default function Navbar() {
           href="mailto:yves.deboeck@ydb-solutions.com"
           className="hidden md:block text-sm font-medium px-4 py-2 rounded border border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 transition-colors"
         >
-          Hire me
+          Get in touch
         </a>
       </nav>
     </header>

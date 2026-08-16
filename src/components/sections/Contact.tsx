@@ -23,9 +23,8 @@ export default function Contact() {
             Let&apos;s work together
           </h2>
           <p className="text-slate-400 leading-relaxed mb-12">
-            I&apos;m actively looking for Data & AI Engineer roles in Toronto,
-            Zurich, and Australia. If you&apos;re building something ambitious
-            with data or AI, I&apos;d love to hear about it.
+            If you&apos;re building something ambitious with data or AI, I&apos;d
+            love to hear about it.
           </p>
         </motion.div>
 
@@ -82,10 +81,8 @@ export default function Contact() {
           <div className="p-5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-3">
             <MapPin size={20} className="text-cyan-400" />
             <div>
-              <p className="text-xs text-slate-500 mb-1">Open to relocation</p>
-              <p className="text-sm text-slate-300">
-                Toronto · Zurich · Australia
-              </p>
+              <p className="text-xs text-slate-500 mb-1">Location</p>
+              <p className="text-sm text-slate-300">{profile.location}</p>
             </div>
           </div>
         </motion.div>

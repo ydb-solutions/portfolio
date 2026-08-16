@@ -63,11 +63,10 @@ export default function About() {
             <p>
               Over the past six years I&apos;ve worked across energy, healthcare,
               and industrial IoT — building everything from embedded device
-              firmware to production ML pipelines. I&apos;m currently looking to
-              bring this experience to an ambitious team in{" "}
-              <span className="text-cyan-400">Toronto</span>,{" "}
-              <span className="text-cyan-400">Zurich</span>, or{" "}
-              <span className="text-cyan-400">Australia</span>.
+              firmware to production ML pipelines. What keeps me interested is
+              the point where those layers meet: getting data off real hardware,
+              through a platform that holds up, and into something people
+              actually use.
             </p>
 
             <div className="flex items-start gap-3 pt-4 p-4 rounded-lg bg-slate-900 border border-slate-800">

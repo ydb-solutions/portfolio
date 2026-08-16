@@ -22,7 +22,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
         >
           <p className="font-mono text-cyan-400 text-sm mb-4 tracking-widest uppercase">
-            Available for relocation
+            Data platforms · Cloud · AI
           </p>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4">
@@ -39,16 +39,7 @@ export default function Hero() {
 
           <div className="flex items-center gap-2 text-slate-500 text-sm mb-10">
             <MapPin size={14} className="text-cyan-500" />
-            <span>Belgium</span>
-            <span className="text-slate-700">→</span>
-            {profile.relocating.map((city, i) => (
-              <span key={city}>
-                <span className="text-slate-300">{city}</span>
-                {i < profile.relocating.length - 1 && (
-                  <span className="text-slate-700 ml-2">·</span>
-                )}
-              </span>
-            ))}
+            <span>{profile.location}</span>
           </div>
 
           <div className="flex flex-wrap gap-4">

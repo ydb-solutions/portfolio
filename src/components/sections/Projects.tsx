@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { projects } from "@/lib/data";
-import { Lock, ExternalLink, Play } from "lucide-react";
+import { Lock, ExternalLink, Play, FileText } from "lucide-react";
 import { GithubIcon } from "@/components/BrandIcons";
 import { useRef, useState } from "react";
 
@@ -88,7 +88,16 @@ export default function Projects() {
                     </span>
                   )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-3">
+                  {project.writeup && (
+                    <a
+                      href={project.writeup}
+                      className="text-slate-500 hover:text-cyan-400 transition-colors"
+                      title="Read the write-up"
+                    >
+                      <FileText size={17} />
+                    </a>
+                  )}
                   {project.github ? (
                     <a
                       href={project.github}
@@ -99,9 +108,11 @@ export default function Projects() {
                       <GithubIcon size={18} />
                     </a>
                   ) : (
-                    <span className="text-slate-700" title="Proprietary — not open source">
-                      <Lock size={16} />
-                    </span>
+                    !project.writeup && (
+                      <span className="text-slate-700" title="Proprietary — not open source">
+                        <Lock size={16} />
+                      </span>
+                    )
                   )}
                 </div>
               </div>
@@ -122,6 +133,16 @@ export default function Projects() {
                   </span>
                 ))}
               </div>
+
+              {project.writeup && (
+                <a
+                  href={project.writeup}
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                >
+                  Read the write-up
+                  <span aria-hidden="true">→</span>
+                </a>
+              )}
             </motion.div>
           ))}
         </div>
