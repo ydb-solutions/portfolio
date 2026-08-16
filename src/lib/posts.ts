@@ -39,7 +39,7 @@ export const posts: Post[] = [
     slug: "lens",
     title: "Five investors, one stock engine",
     blurb:
-      "Lens scores the same company through five investing philosophies instead of pretending there is one universal definition of a \u201cgood stock\u201d. The interesting work was not the radar chart — it was taming messy financial APIs, explicit heuristics, and a cheap but disciplined GCP deployment.",
+      "Lens scores the same company through five investing philosophies instead of pretending there is one universal definition of a \u201cgood stock\u201d. The interesting work was not the radar chart - it was taming messy financial APIs, explicit heuristics, and a cheap but disciplined GCP deployment.",
     date: "2026-08-07",
     readingTime: "11 min",
     tags: ["FastAPI", "React", "PostgreSQL", "GCP", "Finance"],
@@ -48,7 +48,7 @@ export const posts: Post[] = [
     slug: "memry",
     title: "Memry: turning books into study material, with all the messy bits left in",
     blurb:
-      "I built Memry to turn PDFs and EPUBs into summaries, flashcards, and spaced-repetition review. The interesting part was not the AI demo — it was dealing honestly with lossy PDF extraction, token limits, provider differences, and the parts of the pipeline that quietly degrade quality.",
+      "I built Memry to turn PDFs and EPUBs into summaries, flashcards, and spaced-repetition review. The interesting part was not the AI demo - it was dealing honestly with lossy PDF extraction, token limits, provider differences, and the parts of the pipeline that quietly degrade quality.",
     date: "2026-07-29",
     readingTime: "11 min",
     tags: ["AI Engineering", "FastAPI", "React Native", "GCP", "LLM Systems"],
@@ -57,7 +57,7 @@ export const posts: Post[] = [
     slug: "model-predictive-control",
     title: "Model Predictive Control",
     blurb:
-      "How I helped turn cloud-side model predictive control for industrial compressors into a production system: per-site forecasting, Databricks MLOps, firmware integration, and certificate-based device provisioning. The hard parts were latency, deployment safety, and identity — not just the optimiser itself.",
+      "How I helped turn cloud-side model predictive control for industrial compressors into a production system: per-site forecasting, Databricks MLOps, firmware integration, and certificate-based device provisioning. The hard parts were latency, deployment safety, and identity - not just the optimiser itself.",
     date: "2026-07-29",
     readingTime: "14 min",
     tags: ["MLOps", "Databricks", "IoT", "Time Series", "C++", "Azure"],
@@ -84,7 +84,7 @@ export const posts: Post[] = [
     slug: "iot-fleet-management-platform",
     title: "Building an IoT fleet management platform",
     blurb:
-      "How I built an end-to-end platform for monitoring and controlling industrial compressors worldwide — from embedded C++ on Yocto Linux to live dashboards, firmware rollout flows, and telemetry pipelines.",
+      "How I built an end-to-end platform for monitoring and controlling industrial compressors worldwide - from embedded C++ on Yocto Linux to live dashboards, firmware rollout flows, and telemetry pipelines.",
     date: "2026-07-28",
     readingTime: "20 min",
     tags: ["Azure", "IoT", "C++", "Yocto", "FastAPI", "Databricks"],
@@ -93,7 +93,7 @@ export const posts: Post[] = [
     slug: "rag-knowledge-assistant",
     title: "Building a multi-tenant RAG knowledge assistant",
     blurb:
-      "I built and deployed several internal knowledge assistants for different engineering groups at a large industrial company. The interesting work was not the chat UI — it was making retrieval, isolation, grounding, and operations hold up across very different document sets.",
+      "I built and deployed several internal knowledge assistants for different engineering groups at a large industrial company. The interesting work was not the chat UI - it was making retrieval, isolation, grounding, and operations hold up across very different document sets.",
     date: "2026-07-22",
     readingTime: "11 min",
     tags: ["Applied AI", "RAG", "Azure AI Search", "Prompt Flow", "Enterprise Search"],

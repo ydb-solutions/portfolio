@@ -14,7 +14,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Building an IoT fleet management platform — Yves De Boeck",
+  title: "Building an IoT fleet management platform - Yves De Boeck",
   description:
     "How I built an end-to-end fleet platform for industrial compressors: embedded C++ on Yocto, Azure IoT Hub, WebSockets, firmware updates, and telemetry pipelines.",
   openGraph: {
@@ -45,14 +45,14 @@ export default function Post() {
         </h1>
         <p className="text-lg text-slate-400 leading-relaxed mb-16">
           An end-to-end platform for monitoring and controlling industrial
-          compressors worldwide — from embedded C++ on Yocto Linux all the way
+          compressors worldwide - from embedded C++ on Yocto Linux all the way
           to live dashboards, firmware rollout flows, and telemetry pipelines.
         </p>
 
         <P>
           At my employer, I worked on a fleet platform that had to do two very
-          different jobs at once. It had to feel immediate — charts moving,
-          commands returning, firmware progress updating live — and it also had
+          different jobs at once. It had to feel immediate - charts moving,
+          commands returning, firmware progress updating live - and it also had
           to behave like industrial software, where devices disappear for hours,
           networks are unreliable, and the safe choice is often the slower one.
         </P>
@@ -362,7 +362,7 @@ env_<id>      -> invalidate affected queries`}</Pre>
         <P>
           I would also like a cleaner unification between the operational
           time-series storage and the analytical lakehouse path. Right now that
-          split is justified — the query patterns are genuinely different — but it
+          split is justified - the query patterns are genuinely different - but it
           does mean two places to reason about retention, dedupe, and schema
           evolution. The architecture is correct; it is just not cheap in
           cognitive load.

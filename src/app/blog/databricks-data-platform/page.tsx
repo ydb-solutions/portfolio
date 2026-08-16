@@ -14,7 +14,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Building a Databricks data platform that could survive reality — Yves De Boeck",
+  title: "Building a Databricks data platform that could survive reality - Yves De Boeck",
   description:
     "How I built a production lakehouse on Databricks around batch and streaming sources, medallion layers, dbt, Delta Live Tables, and Unity Catalog.",
   openGraph: {
@@ -336,8 +336,8 @@ df = spark.read.schema(spark_schema).parquet(path)`}</Pre>
         <H2>What I would change</H2>
         <P>
           If I were starting again, I would standardize the ingest contract even
-          harder. The platform already converged on common ideas — source file
-          path, ingested timestamp, append-first bronze, replayability — but the
+          harder. The platform already converged on common ideas - source file
+          path, ingested timestamp, append-first bronze, replayability - but the
           implementation still reflects the history of real projects arriving one
           by one.
         </P>

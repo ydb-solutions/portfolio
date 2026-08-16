@@ -14,7 +14,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "OpenClaw: the assistant I actually run — Yves De Boeck",
+  title: "OpenClaw: the assistant I actually run - Yves De Boeck",
   description:
     "How my self-hosted assistant really works in production: a Dockerized gateway on GCP, Telegram delivery, persistent state under ~/.openclaw, cron automations, and the operational tradeoffs behind it.",
   openGraph: {
@@ -150,7 +150,7 @@ OpenClaw Gateway :18789
           systems property, and I trust it more than most AI tooling abstractions.
         </Callout>
 
-        <H2>Memory is not magical — and that is why it works</H2>
+        <H2>Memory is not magical - and that is why it works</H2>
         <P>
           The live instance uses Gemini-backed semantic memory search, but the
           part I trust most is more boring than that. Memory is grounded in the

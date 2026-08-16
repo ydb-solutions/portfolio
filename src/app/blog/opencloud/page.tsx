@@ -15,7 +15,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "OpenCloud: a team assistant with memory and guardrails — Yves De Boeck",
+  title: "OpenCloud: a team assistant with memory and guardrails - Yves De Boeck",
   description:
     "OpenCloud is the internal AI assistant I built for Slack and Teams, wired around MCP sidecars, persistent team memory, and unusually explicit safety controls.",
   openGraph: {

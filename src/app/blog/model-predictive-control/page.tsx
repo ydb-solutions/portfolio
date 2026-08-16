@@ -14,7 +14,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Model Predictive Control — Yves De Boeck",
+  title: "Model Predictive Control - Yves De Boeck",
   description:
     "How I helped turn cloud-side model predictive control for industrial compressors into a production system: per-site forecasting, Databricks MLOps, firmware integration, and certificate-based device provisioning.",
   openGraph: {

@@ -7,7 +7,7 @@ const pillars = [
   {
     icon: <Cpu size={20} />,
     label: "Full Stack & IoT",
-    text: "React, FastAPI, embedded C++ on Yocto — from device to cloud.",
+    text: "React, FastAPI, embedded C++ on Yocto - from device to cloud.",
   },
   {
     icon: <Database size={20} />,
@@ -60,9 +60,9 @@ export default function About() {
             />
             <p>
               I&apos;m a Belgian engineer with a deep passion for building
-              systems that work in the real world — not just on paper. My
+              systems that work in the real world - not just on paper. My
               career spans full-stack web development, IoT, cloud
-              infrastructure, data engineering, and AI — and I&apos;m most
+              infrastructure, data engineering, and AI - and I&apos;m most
               energised when those disciplines intersect.
             </p>
             <p>
@@ -74,7 +74,7 @@ export default function About() {
             </p>
             <p>
               Over the past six years I&apos;ve worked across energy, healthcare,
-              and industrial IoT — building everything from embedded device
+              and industrial IoT - building everything from embedded device
               firmware to production ML pipelines. What keeps me interested is
               the point where those layers meet: getting data off real hardware,
               through a platform that holds up, and into something people

@@ -15,7 +15,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "My finance app starts with a bank statement — Yves De Boeck",
+  title: "My finance app starts with a bank statement - Yves De Boeck",
   description:
     "A local-first finance tracker built around PDF and Excel imports, GPT-assisted transaction extraction, and a deliberately simple categorisation loop.",
   openGraph: {
@@ -266,7 +266,7 @@ save_transactions(df)`}</Pre>
         <H2>What I would change</H2>
         <P>
           First, I would replace CSV and JSON persistence with a small relational
-          store — probably SQLite first, Postgres only if the deployment story
+          store - probably SQLite first, Postgres only if the deployment story
           really demanded it. That would buy me transactions, constraints,
           better update semantics, and cleaner reporting queries without losing
           the local-first feel.

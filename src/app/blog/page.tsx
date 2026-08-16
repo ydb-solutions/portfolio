@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { posts } from "@/lib/posts";
 
 export const metadata: Metadata = {
-  title: "Writing — Yves De Boeck",
+  title: "Writing - Yves De Boeck",
   description:
     "Notes on data platforms, geospatial pipelines, and building systems that hold up in production.",
 };
@@ -26,7 +26,7 @@ export default function BlogIndex() {
         </p>
         <h1 className="text-4xl font-bold text-white mb-6">Notes</h1>
         <p className="text-slate-400 leading-relaxed mb-16">
-          Longer-form write-ups on things I have built — the constraints, the
+          Longer-form write-ups on things I have built - the constraints, the
           decisions, and the parts that did not work the first time.
         </p>
 

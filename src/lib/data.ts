@@ -10,7 +10,7 @@ export const profile = {
   education: {
     degree: "MSc Computer Science Engineering (magna cum laude)",
     institution: "University of Antwerp",
-    note: "Offered a PhD in AI/simulation for autonomous vehicles — chose industry to solve real-world problems.",
+    note: "Offered a PhD in AI/simulation for autonomous vehicles - chose industry to solve real-world problems.",
   },
 };
 
@@ -24,9 +24,9 @@ export const experiences = [
       "Designed and built a cloud-native IoT fleet management platform on Azure, ingesting real-time telemetry from industrial compressors worldwide via MQTT and IoT Hub, streamed live to the frontend via WebSockets.",
       "Wrote the embedded C++ component on a custom Yocto OS for compressor controllers, bridging the internal MQTT bus with the Azure IoT Hub.",
       "Built and maintained production APIs consumed by field service technicians on customer sites.",
-      "Set up a Databricks data platform from scratch: medallion architecture, PySpark, dbt, Delta Lake, Unity Catalog, DLT — ingesting SQL, JSON, XML, Kafka, and text sources in batch and streaming.",
+      "Set up a Databricks data platform from scratch: medallion architecture, PySpark, dbt, Delta Lake, Unity Catalog, DLT - ingesting SQL, JSON, XML, Kafka, and text sources in batch and streaming.",
       "Developed a RAG-based internal knowledge app using Azure AI Search and Prompt Flow, deployed across multiple departments with per-department document indexes.",
-      "Created an agentic AI assistant (similar to OpenClaw) using Azure Agent Framework (Semantic Kernel) and Azure AI Foundry, integrated with Slack — handling ticket management, PR reviews, security assessments, and CI/pipeline status reports.",
+      "Created an agentic AI assistant (similar to OpenClaw) using Azure Agent Framework (Semantic Kernel) and Azure AI Foundry, integrated with Slack - handling ticket management, PR reviews, security assessments, and CI/pipeline status reports.",
       "Built an agentic security scanner published as an Azure DevOps task: auto-detects stack, runs scanners, triages findings, fixes code in an agentic loop, and auto-generates a PR for final fixes.",
       "Full IaC with Bicep and Terraform across all projects; CI/CD with Azure DevOps and Jenkins.",
     ],
@@ -178,7 +178,7 @@ export const projects = [
   {
     name: "Agentic Security Scanner",
     description:
-      "Azure DevOps security task that detects the project stack, orchestrates multiple scanners, and consolidates findings into one triage flow. An LLM enriches results with exploitability, recommended action, and false-positive filtering. For safe classes of issues it can propose fixes, validate them, and open a PR for human review — built for enterprise CI/CD where remediation speed matters as much as detection.",
+      "Azure DevOps security task that detects the project stack, orchestrates multiple scanners, and consolidates findings into one triage flow. An LLM enriches results with exploitability, recommended action, and false-positive filtering. For safe classes of issues it can propose fixes, validate them, and open a PR for human review - built for enterprise CI/CD where remediation speed matters as much as detection.",
     tags: ["Azure DevOps", "Security", "LLM Agents", "Python", "DevSecOps"],
     github: null,
     video: null,
@@ -377,7 +377,7 @@ export const education = [
   {
     degree: "MSc Computer Science Engineering (magna cum laude)",
     institution: "University of Antwerp",
-    note: "Offered a PhD in AI/simulation for autonomous vehicles — chose industry to solve real-world problems.",
+    note: "Offered a PhD in AI/simulation for autonomous vehicles - chose industry to solve real-world problems.",
     file: "/docs/msc_diploma.pdf",
   },
 ];

@@ -15,7 +15,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Five investors, one stock engine — Yves De Boeck",
+  title: "Five investors, one stock engine - Yves De Boeck",
   description:
     "Building Lens: a stock intelligence platform that scores companies through five investor frameworks, from Graham to O'Neil.",
   openGraph: {
@@ -60,7 +60,7 @@ export default function Post() {
         </P>
         <P>
           So the product premise became: score the same stock through five lenses
-          — Graham, Buffett, Lynch, O&apos;Neil, and Dividend — then show the result
+          - Graham, Buffett, Lynch, O&apos;Neil, and Dividend - then show the result
           as a radar chart and a per-profile metric breakdown. The repo is split
           cleanly: <Code>frontend/</Code> is a Vite + React + TypeScript app,
           <Code>backend/</Code> is a FastAPI service with a light hexagonal
@@ -115,7 +115,7 @@ ORDER BY (
         <P>
           The tradeoff is obvious: JSONB is flexible, but it is not a great fit if
           I ever want serious historical analytics. For the current product shape
-          — one latest snapshot per ticker — it is the right kind of laziness.
+          - one latest snapshot per ticker - it is the right kind of laziness.
         </P>
 
         <H2>Financial APIs are messy in boring ways</H2>
@@ -238,8 +238,8 @@ rs = 50 + (diff * 100)   # rough mapping; refine with universe data`}</Pre>
           The comment in the code says what needs saying: this is a rough mapping.
           A real relative-strength percentile should be computed against a broad
           universe, not one ETF. The current implementation is directionally
-          useful — it tells me whether a stock is materially outperforming the
-          market — but it is not a faithful reproduction of institutional RS.
+          useful - it tells me whether a stock is materially outperforming the
+          market - but it is not a faithful reproduction of institutional RS.
         </P>
         <P>
           The same is true for volume. Lens compares current volume with the

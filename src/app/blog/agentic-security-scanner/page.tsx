@@ -15,7 +15,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "A security scanner that files its own pull requests — Yves De Boeck",
+  title: "A security scanner that files its own pull requests - Yves De Boeck",
   description:
     "How I built an Azure DevOps task that detects the stack, runs multiple security scanners, triages findings with an LLM, and opens fix PRs with guardrails.",
   openGraph: {
@@ -121,10 +121,10 @@ export default function Post() {
 
         <H2>What it actually scans</H2>
         <P>
-          The repo detector looks for familiar marker files —{" "}
+          The repo detector looks for familiar marker files -{" "}
           <Code>pyproject.toml</Code>, <Code>requirements.txt</Code>,{" "}
           <Code>package.json</Code>, <Code>Dockerfile</Code>,{" "}
-          <Code>*.bicep</Code>, <Code>*.tf</Code>, and a few others — and builds
+          <Code>*.bicep</Code>, <Code>*.tf</Code>, and a few others - and builds
           a simple stack list from that. The scanner orchestration is
           deliberately less ambitious than the detector.
         </P>
@@ -275,7 +275,7 @@ run_validation(path) -> ok | error`}</Pre>
         </P>
         <UL>
           <LI>
-            It only attempts fixes for a narrow scanner set — currently Checkov
+            It only attempts fixes for a narrow scanner set - currently Checkov
             findings in the agentic path.
           </LI>
           <LI>
@@ -388,8 +388,8 @@ git push --set-upstream origin security/auto-fix-{BUILD_BUILDID}`}</Pre>
           The second upgrade is broader scanner coverage. The detector already
           knows about Node and .NET, but that should turn into first-class
           scanner paths instead of a future intention. The third is stronger
-          policy around what the agent may edit — for example only dependency
-          manifests, Dockerfiles and explicitly allowlisted IaC directories —
+          policy around what the agent may edit - for example only dependency
+          manifests, Dockerfiles and explicitly allowlisted IaC directories -
           because successful automation tends to earn more trust than it should.
         </P>
         <P>

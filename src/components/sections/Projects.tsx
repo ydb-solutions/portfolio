@@ -121,7 +121,7 @@ export default function Projects() {
                     </a>
                   ) : (
                     !project.writeup && (
-                      <span className="text-slate-700" title="Proprietary — not open source">
+                      <span className="text-slate-700" title="Proprietary - not open source">
                         <Lock size={16} />
                       </span>
                     )

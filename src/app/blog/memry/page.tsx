@@ -14,7 +14,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Memry — Yves De Boeck",
+  title: "Memry - Yves De Boeck",
   description:
     "How I built Memry: a PDF-to-study-material pipeline with FastAPI, Gemini, OpenAI, SM-2 review scheduling, and a web/mobile product on GCP.",
   openGraph: {
@@ -138,7 +138,7 @@ results = await asyncio.gather(
         <P>
           OpenAI and Gemini do not get the exact same treatment. Gemini uses a
           long-context path and hard-truncates structure extraction input at{" "}
-          <Code>LLM_MAX_INPUT_CHARS</Code> — 800,000 characters by default.
+          <Code>LLM_MAX_INPUT_CHARS</Code> - 800,000 characters by default.
           OpenAI switches to chunked processing above{" "}
           <Code>OPENAI_MAX_INPUT_CHARS</Code>, analyzes chunks in parallel, then
           asks the model to combine them back into one JSON structure.
@@ -173,8 +173,8 @@ results = await asyncio.gather(
         </P>
         <Pre>{`content = chapter_data.get("content", chapter_data.get("summary", ""))`}</Pre>
         <P>
-          That means if the first model pass does not return raw chapter content —
-          and the prompt does not require it — the second wave of summary and
+          That means if the first model pass does not return raw chapter content -
+          and the prompt does not require it - the second wave of summary and
           flashcard generation runs on the model&apos;s own summary of the chapter,
           not on the extracted PDF text. In effect, the PDF pipeline can become a
           two-step lossy compression: raw text → model summary → more summaries and

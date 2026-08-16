@@ -15,7 +15,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Building a multi-tenant RAG knowledge assistant — Yves De Boeck",
+  title: "Building a multi-tenant RAG knowledge assistant - Yves De Boeck",
   description:
     "How I shipped a department-scoped knowledge assistant with Azure AI Search, Prompt Flow, hybrid retrieval, and grounded citations.",
   openGraph: {

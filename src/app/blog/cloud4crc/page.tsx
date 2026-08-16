@@ -14,7 +14,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Cloud4crc: a modular monolith for desktop tools — Yves De Boeck",
+  title: "Cloud4crc: a modular monolith for desktop tools - Yves De Boeck",
   description:
     "How I built a FastAPI platform that serves multiple desktop tools, preserves old API contracts, and leans on Azure primitives instead of microservice sprawl.",
   openGraph: {

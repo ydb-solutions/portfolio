@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Yves De Boeck — Data & AI Engineer",
+  title: "Yves De Boeck - Data & AI Engineer",
   description:
     "Data & AI Engineer with expertise in Databricks, Azure, RAG systems, and LLM agents. Based in Belgium.",
   keywords: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "React",
   ],
   openGraph: {
-    title: "Yves De Boeck — Data & AI Engineer",
+    title: "Yves De Boeck - Data & AI Engineer",
     description:
       "Building production-grade data platforms, cloud infrastructure, and AI systems.",
     url: "https://portfolio.ydb-solutions.com",

@@ -17,7 +17,7 @@ import {
 } from "@/components/blog/Prose";
 
 export const metadata: Metadata = {
-  title: "Every fire on Earth, every morning — Yves De Boeck",
+  title: "Every fire on Earth, every morning - Yves De Boeck",
   description:
     "Building a global thermal-anomaly pipeline on Databricks Free Edition: NASA FIRMS, H3 hexagons, and the constraints that shaped the architecture.",
   openGraph: {
@@ -49,12 +49,12 @@ export default function Post() {
         <p className="text-lg text-slate-400 leading-relaxed mb-16">
           Three polar-orbiting satellites see roughly a quarter of a million
           thermal anomalies a day. This is how I turn that into a globe you can
-          spin — on a free Databricks tier that is not allowed to talk to NASA.
+          spin - on a free Databricks tier that is not allowed to talk to NASA.
         </p>
 
         <Abstract>
           <Pre>{`NASA FIRMS API      3 VIIRS satellites · ~250k detections/day · CSV
-      │  06:15   GitHub Actions — the lakehouse may not call NASA
+      │  06:15   GitHub Actions - the lakehouse may not call NASA
   bronze          delete-then-insert by date; NRT revisions self-heal
       │  07:15   dbt build (models + tests)
   silver          dedupe on natural key · repair unpadded timestamps
@@ -62,7 +62,7 @@ export default function Post() {
   gold            5 models: hex aggregates · daily totals · fire
                   complexes · raw detections · cross-validation
       │  07:45
-  published       static site + PMTiles archive — no backend at all`}</Pre>
+  published       static site + PMTiles archive - no backend at all`}</Pre>
           <ul className="space-y-2.5 mt-5 text-[0.95rem] leading-relaxed">
             <KeyPoint label="Ingest runs outside the lakehouse.">
               Free Edition restricts serverless egress to an allowlist that does
@@ -110,15 +110,15 @@ export default function Post() {
 
         <H2>The constraint that shaped everything</H2>
         <P>
-          The whole platform runs on Databricks Free Edition — serverless only, one
+          The whole platform runs on Databricks Free Edition - serverless only, one
           workspace, zero cloud spend. That last part is a real design goal, not a
           brag: I wanted to prove the architecture stands up without a corporate
           account behind it.
         </P>
         <P>
           Free Edition restricts serverless egress to an allowlist of trusted
-          domains. NASA is not on it. So the most basic operation in the pipeline —{" "}
-          <Code>GET</Code> a CSV from a public API — cannot happen inside the
+          domains. NASA is not on it. So the most basic operation in the pipeline -{" "}
+          <Code>GET</Code> a CSV from a public API - cannot happen inside the
           lakehouse.
         </P>
         <P>
@@ -126,7 +126,7 @@ export default function Post() {
           <Em> outside</Em> Databricks as a scheduled GitHub Actions workflow that
           pushes <Em>into</Em> the workspace: files through the Files API, metadata
           through the SQL warehouse. I call these ground stations, and there are
-          three of them — one for Copernicus Sentinel-2 imagery, one for Mars rover
+          three of them - one for Copernicus Sentinel-2 imagery, one for Mars rover
           telemetry, and this one for fires.
         </P>
         <Callout label="Why this is not a hack">
@@ -142,7 +142,7 @@ export default function Post() {
           NASA FIRMS publishes near-real-time detections from VIIRS, the imaging
           radiometer flying on Suomi-NPP, NOAA-20 and NOAA-21. Three separate
           satellites in three separate polar orbits, so pulling all three is not
-          redundancy — it is more passes per day over the same ground.
+          redundancy - it is more passes per day over the same ground.
         </P>
         <P>
           Each row is one 375-metre pixel that the onboard algorithm flagged as
@@ -153,13 +153,13 @@ satellite,instrument,confidence,version,bright_ti5,frp,daynight
 21.41485,-158.0162,337.92,0.48,0.4,2026-07-18,7,N,VIIRS,
 n,2.0NRT,300.46,3.13,D`}</Pre>
         <P>
-          The field that matters most is <Code>frp</Code> — Fire Radiative Power,
+          The field that matters most is <Code>frp</Code> - Fire Radiative Power,
           in megawatts. It is the energy release rate, and the best available proxy
           for how hard something is burning. It is what I weight by, colour by, and
           sort by throughout the stack.
         </P>
         <Callout label="An honesty problem worth naming">
-          VIIRS detects <Em>thermal anomalies, predominantly active fires</Em> —
+          VIIRS detects <Em>thermal anomalies, predominantly active fires</Em> -
           not fires exclusively. Gas flares over oil fields, steel mills and active
           volcanoes all show up as persistent hotspots. Any dashboard that labels
           this data &ldquo;fires&rdquo; without qualification is lying slightly. I
@@ -175,8 +175,8 @@ n,2.0NRT,300.46,3.13,D`}</Pre>
           guaranteed to match what you fetched yesterday.
         </P>
         <P>
-          The obvious design — a watermark cursor, append everything newer than
-          last time — is wrong here. It would accumulate stale duplicates of the
+          The obvious design - a watermark cursor, append everything newer than
+          last time - is wrong here. It would accumulate stale duplicates of the
           same detection, each a slightly different version of the truth.
         </P>
         <P>So the ingest is date-keyed replacement instead:</P>
@@ -205,8 +205,8 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
 
         <H2>Three layers, three different jobs</H2>
         <P>
-          Everything downstream of that insert is a medallion architecture —
-          bronze, silver, gold — and the split is not ceremony. Each layer is
+          Everything downstream of that insert is a medallion architecture -
+          bronze, silver, gold - and the split is not ceremony. Each layer is
           allowed to do exactly one kind of work, which is what makes it possible
           to reason about where a bug can live.
         </P>
@@ -239,7 +239,7 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
         </P>
         <P>
           <Em>First, deduplicate on the natural key.</Em> Bronze already guarantees
-          no duplicates through delete-then-insert, so this is belt and braces —
+          no duplicates through delete-then-insert, so this is belt and braces -
           but it means the natural key holds regardless of how bronze was loaded,
           including by a future me doing a manual backfill at 11pm:
         </P>
@@ -271,7 +271,7 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
           rather than an error.
         </P>
         <P>
-          <Em>Third, index into H3</Em> at three resolutions — the next two
+          <Em>Third, index into H3</Em> at three resolutions - the next two
           sections are about why, because it is the most interesting decision in
           the pipeline.
         </P>
@@ -299,7 +299,7 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
           Meridians converge toward the poles. A one-degree box covers about 12,300
           km² at the equator and about 4,200 km² at 70°N. The regions I monitor
           span the Angola/DRC miombo belt at 10°S and the Northwest Territories
-          boreal complex at 64°N — so &ldquo;detections per cell&rdquo; would mean
+          boreal complex at 64°N - so &ldquo;detections per cell&rdquo; would mean
           something different in each place, and every comparison between the
           tropics and the boreal forest would be measuring the map projection
           instead of the fires.
@@ -328,14 +328,14 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
         <P>
           Indexing is just bucketing: a continuous coordinate becomes a discrete
           cell ID, and a spatial question turns into string equality. No geometry
-          library, no spatial join —{" "}
+          library, no spatial join -{" "}
           <Code>GROUP BY h3_5</Code> is an ordinary hash aggregation.
         </P>
         <P>
           Hexagons buy a second property that squares cannot: uniform adjacency.
           Every hexagon has six neighbours, all equidistant. A square grid has four
           edge-neighbours and four corner-neighbours 1.41× further away, so
-          &ldquo;adjacent&rdquo; is ambiguous — which matters the moment you try to
+          &ldquo;adjacent&rdquo; is ambiguous - which matters the moment you try to
           cluster or model spread.
         </P>
 
@@ -348,8 +348,8 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
 h3_h3tostring(h3_longlatash3(longitude, latitude, 4)) as h3_4,
 h3_h3tostring(h3_longlatash3(longitude, latitude, 5)) as h3_5`}</Pre>
         <P>
-          That looks wasteful. H3 is hierarchical — the cell IDs literally share a
-          prefix — so surely you index once at the finest resolution and truncate
+          That looks wasteful. H3 is hierarchical - the cell IDs literally share a
+          prefix - so surely you index once at the finest resolution and truncate
           to get the coarser ones?
         </P>
         <P>
@@ -372,7 +372,7 @@ whose res-4 parent differs from the point's
 directly-assigned res-4 cell`}</Pre>
         <P>
           Rolling up instead of re-indexing would have misattributed about 7% of
-          detections to the wrong coarse hexagon — and not randomly. The errors
+          detections to the wrong coarse hexagon - and not randomly. The errors
           concentrate at cell boundaries, which is exactly where a large fire
           complex straddles two cells and where you most want the count to be
           right.
@@ -380,13 +380,13 @@ directly-assigned res-4 cell`}</Pre>
         <Callout label="The general lesson">
           Hierarchical index systems tempt you to treat the hierarchy as geometry.
           Check whether your parent-child relationship is exact or approximate
-          before you optimise around it — the version that looks redundant was the
+          before you optimise around it - the version that looks redundant was the
           correct one, and it cost nothing.
         </Callout>
 
         <H2>What gold actually computes</H2>
         <P>
-          Five models, all dbt, all rebuilt every morning — and rebuilt with{" "}
+          Five models, all dbt, all rebuilt every morning - and rebuilt with{" "}
           <Code>dbt build</Code> rather than <Code>dbt run</Code>, which is the
           difference between running the models and running the models{" "}
           <Em>plus their tests</Em>. Grain uniqueness and not-null assertions
@@ -395,7 +395,7 @@ directly-assigned res-4 cell`}</Pre>
           from the map looking wrong.
         </P>
 
-        <H3>fires_daily_h3 — the hexagons</H3>
+        <H3>fires_daily_h3 - the hexagons</H3>
         <P>
           Three resolutions stacked into one table by a Jinja loop that unions
           three aggregations of the same source:
@@ -418,17 +418,17 @@ group by h3_{{ res }}, acq_date
         <P>
           Stacking them means the client swaps aggregation level on zoom with one
           query shape and a changed integer, rather than three different endpoints.
-          The grain — resolution, cell, date — is enforced by a uniqueness test, so
+          The grain - resolution, cell, date - is enforced by a uniqueness test, so
           the union cannot quietly produce overlapping rows.
         </P>
 
-        <H3>fires_daily_stats — the headline numbers</H3>
+        <H3>fires_daily_stats - the headline numbers</H3>
         <P>
           The same aggregation with the spatial dimension removed: one row per day,
           global totals, feeding the counters above the map.
         </P>
         <P>
-          It looks redundant — surely you can sum the hexagons? Almost, but not
+          It looks redundant - surely you can sum the hexagons? Almost, but not
           quite, and the exception is a nice reminder that{" "}
           <Em>not every aggregate is additive</Em>. Detection counts and total fire
           power roll up fine. The number of distinct satellites contributing does
@@ -437,7 +437,7 @@ group by h3_{{ res }}, acq_date
           you want to read them at.
         </P>
 
-        <H3>active_fires — the one with actual logic in it</H3>
+        <H3>active_fires - the one with actual logic in it</H3>
         <P>
           &ldquo;Fire complexes&rdquo; over the trailing 48 hours: coarse cells with
           at least three detections, ranked by intensity. Three decisions in here I
@@ -467,7 +467,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
         <P>
           A plain average puts the marker in the geometric middle of the
           detections, which for a long fire front is often somewhere nothing is
-          burning. Weighting by power drags it toward the hottest part — where you
+          burning. Weighting by power drags it toward the hottest part - where you
           would actually send an aircraft. This is also why the model filters to
           rows with positive fire power: the division needs a non-zero denominator.
         </P>
@@ -483,7 +483,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
           <Code>nullif</Code> matters more than it looks: a complex with no
           activity in the previous period would divide by zero, and the honest
           answer there is not &ldquo;infinite growth&rdquo; but{" "}
-          <Em>null</Em> — a brand-new fire with no baseline to compare against.
+          <Em>null</Em> - a brand-new fire with no baseline to compare against.
           Encoding &ldquo;I cannot know this&rdquo; distinctly from a number is
           most of what makes a metric trustworthy.
         </P>
@@ -492,17 +492,17 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
           a fire complex; it is usually a factory.
         </P>
 
-        <H3>detections_recent — a view, for an unglamorous reason</H3>
+        <H3>detections_recent - a view, for an unglamorous reason</H3>
         <P>
           Last seven days of individual detections, unaggregated. It exists in gold
           purely because of permissions: the app&apos;s service principal is granted
           read access to the gold schema only, and Unity Catalog views execute with
           their owner&apos;s privileges. The view lets the app read silver-grade
           data without ever holding a grant on silver. Not a modelling decision at
-          all — an access-control one wearing a modelling costume.
+          all - an access-control one wearing a modelling costume.
         </P>
 
-        <H3>s2_firms_agreement — checking one pipeline against another</H3>
+        <H3>s2_firms_agreement - checking one pipeline against another</H3>
         <P>
           The one I find most satisfying. My Sentinel-2 pipeline detects burn scars
           optically, by measuring how vegetation reflectance changed between two
@@ -514,7 +514,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
           This view joins them: FIRMS points falling inside a monitored region are
           mapped onto the Sentinel-2 analysis grid and matched to burn-scar cells
           within three days. It is a view rather than a table because the two
-          pipelines rebuild an hour apart — a table would always be showing one run
+          pipelines rebuild an hour apart - a table would always be showing one run
           of stale agreement.
         </P>
 
@@ -526,14 +526,14 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
         <Pre>{`{ "h3": "8446483ffffffff", "n": 214, "frp": 8231.4 }`}</Pre>
         <P>
           The client reconstructs the polygon with <Code>cellToBoundary()</Code>{" "}
-          from h3-js. A hexagon as GeoJSON is seven coordinate pairs — around 120
+          from h3-js. A hexagon as GeoJSON is seven coordinate pairs - around 120
           bytes. As an H3 ID it is 15 characters. Across tens of thousands of cells
           that is most of an order of magnitude of bandwidth, and the client-side
           cost is a function call that was already loaded.
         </P>
         <P>
           The string form is not cosmetic either. H3 IDs are 64-bit integers, and
-          JSON has no int64 —{" "}
+          JSON has no int64 -{" "}
           <Code>591208020730445823</Code> exceeds JavaScript&apos;s safe integer
           range and would silently lose precision in transit. The hex string is the
           only safe wire format.
@@ -542,7 +542,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
         <H2>The demo has no backend at all</H2>
         <P>
           There is a constraint I did not see coming until I tried to share this.
-          Databricks Apps cannot be made public — anonymous access and SSO bypass
+          Databricks Apps cannot be made public - anonymous access and SSO bypass
           are unsupported, and the free tier has no identity provider to enrol
           outside viewers through. A link to the running app shows every visitor a
           login wall they have no way past.
@@ -550,7 +550,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
         <P>
           So the globe is republished every morning as a static site instead. Worth
           being precise about what that means, because the word is slippery: the
-          frontend was <Em>always</Em> static — a compiled bundle of HTML, CSS and
+          frontend was <Em>always</Em> static - a compiled bundle of HTML, CSS and
           JavaScript. What changed is that there is no longer a{" "}
           <Em>server process</Em> sitting next to those files. Previously one
           uvicorn process served both the bundle and the <Code>/api/*</Code> routes
@@ -581,7 +581,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
           >
             PMTiles
           </a>
-          , and what I like about it is that it does not answer the hard question —
+          , and what I like about it is that it does not answer the hard question -
           it replaces it with an easy one.
         </P>
         <P>
@@ -595,7 +595,7 @@ sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
         <Pre>{`GET /fires.pmtiles
 Range: bytes=4182000-4190999`}</Pre>
         <P>
-          That is an ordinary HTTP range request — the same mechanism that lets you
+          That is an ordinary HTTP range request - the same mechanism that lets you
           scrub into the middle of a video without downloading it. &ldquo;Which
           detections are in this box?&rdquo; requires understanding the data.
           &ldquo;Give me these bytes&rdquo; requires understanding nothing, which
@@ -603,7 +603,7 @@ Range: bytes=4182000-4190999`}</Pre>
         </P>
         <Callout label="The version with no server is the better one">
           The live API capped results at 10,000 detections ordered by fire power,
-          because an unbounded viewport query would have been unbounded work — the
+          because an unbounded viewport query would have been unbounded work - the
           UI carried a &ldquo;showing top 10k, zoom in&rdquo; badge to admit it. The
           tiled version has no cap: all 1.75M detections are addressable, because
           the client only ever pulls the handful of tiles under the viewport. The
@@ -614,8 +614,8 @@ Range: bytes=4182000-4190999`}</Pre>
           One wrinkle worth recording, since I got it wrong first. I assumed the
           whole thing could sit on Cloudflare Pages. It cannot: Pages does not
           serve range requests correctly and caps files at 25 MiB, and the archive
-          is larger than that. The tiles live on R2 — object storage, range
-          requests supported, no egress fees — while Pages serves the bundle and
+          is larger than that. The tiles live on R2 - object storage, range
+          requests supported, no egress fees - while Pages serves the bundle and
           the small JSON. Two hosts, still nothing to operate, still zero a month.
         </P>
 
@@ -628,7 +628,7 @@ Range: bytes=4182000-4190999`}</Pre>
           changed since they landed.
         </P>
         <P>
-          The fix is not exotic — incremental models keyed on acquisition date with
+          The fix is not exotic - incremental models keyed on acquisition date with
           a lookback matching the revision window, plus a retention policy on
           bronze. I have deliberately not built it yet, because the pipeline that
           exists is correct and the one I would replace it with is merely faster,
@@ -637,7 +637,7 @@ Range: bytes=4182000-4190999`}</Pre>
         <P>
           The second weakness is a fragile join. A view cross-validates my
           Sentinel-2 burn-scar detections against FIRMS hotspots by recomputing my
-          analysis-grid cell IDs in SQL — duplicating a formula that lives in
+          analysis-grid cell IDs in SQL - duplicating a formula that lives in
           Python. Nothing enforces that the two stay in sync. If I change the grid,
           the view produces wrong joins silently rather than failing. A shared
           fixture asserting both implementations agree is the real fix; a code
@@ -645,7 +645,7 @@ Range: bytes=4182000-4190999`}</Pre>
         </P>
         <P>
           The third is not a weakness so much as a ceiling. Precomputing every
-          answer works because the questions are few and known — nine hex slices
+          answer works because the questions are few and known - nine hex slices
           and a fixed tile pyramid. It stops working the moment someone wants to
           ask something I did not anticipate: filter by satellite, compare two
           arbitrary date ranges, draw their own region of interest. That is the
@@ -661,10 +661,10 @@ Range: bytes=4182000-4190999`}</Pre>
             <Em>Source:</Em> NASA FIRMS area API, three VIIRS NRT feeds, CSV.
           </LI>
           <LI>
-            <Em>Ingest:</Em> Python on GitHub Actions cron — the ground station.
+            <Em>Ingest:</Em> Python on GitHub Actions cron - the ground station.
           </LI>
           <LI>
-            <Em>Lakehouse:</Em> Databricks Free Edition — Unity Catalog, Delta, UC
+            <Em>Lakehouse:</Em> Databricks Free Edition - Unity Catalog, Delta, UC
             Volumes, serverless SQL.
           </LI>
           <LI>
@@ -688,7 +688,7 @@ Range: bytes=4182000-4190999`}</Pre>
         </UL>
         <P>
           Total running cost: zero. That constraint produced better engineering
-          than a budget would have — every architectural decision had to be
+          than a budget would have - every architectural decision had to be
           justified against a platform that said no a lot.
         </P>
       </article>
