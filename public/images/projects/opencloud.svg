@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg-opencloud" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="glow-opencloud" cx="50%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-opencloud" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg-opencloud)"/>
+  <rect width="800" height="450" fill="url(#grid-opencloud)"/>
+  <rect width="800" height="450" fill="url(#glow-opencloud)"/>
+  <g stroke="#22d3ee" stroke-width="2" fill="none" opacity="0.9" transform="translate(400,205)">
+    
+    <path d="M -110 40 a 55 55 0 1 1 6 -66 a 70 70 0 0 1 132 20 a 48 48 0 0 1 -18 92 h -170 a 46 46 0 0 1 -16 -88 Z" opacity="0.8"/>
+    <circle cx="-60" cy="10" r="8" fill="#22d3ee" stroke="none"/>
+    <circle cx="10" cy="0" r="8" fill="#22d3ee" stroke="none"/>
+    <circle cx="70" cy="15" r="8" fill="#22d3ee" stroke="none"/>
+
+  </g>
+  <text x="48" y="400" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="2" fill="#67e8f9" opacity="0.85">OPENCLOUD</text>
+</svg>

@@ -78,7 +78,19 @@ export default function Projects() {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="group p-6 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col"
             >
-              {project.video && <VideoPreview src={project.video} />}
+              {project.video ? (
+                <VideoPreview src={project.video} />
+              ) : (
+                project.image && (
+                  <div className="relative rounded-lg overflow-hidden mb-4 bg-slate-950 aspect-video border border-slate-800">
+                    <img
+                      src={project.image}
+                      alt={`${project.name} cover art`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )
+              )}
 
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -158,6 +170,13 @@ export default function Projects() {
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 className="p-4 rounded-lg bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-colors flex items-center gap-4"
               >
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={`${project.name} cover art`}
+                    className="hidden sm:block w-20 h-14 rounded-md object-cover border border-slate-800 shrink-0"
+                  />
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="text-sm font-semibold text-slate-200">
@@ -173,18 +192,31 @@ export default function Projects() {
                     {project.description}
                   </p>
                 </div>
-                {project.github ? (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-slate-600 hover:text-cyan-400 transition-colors shrink-0"
-                  >
-                    <ExternalLink size={14} />
-                  </a>
-                ) : (
-                  <Lock size={14} className="text-slate-700 shrink-0" />
-                )}
+                <div className="flex items-center gap-3 shrink-0">
+                  {project.writeup && (
+                    <a
+                      href={project.writeup}
+                      className="text-slate-500 hover:text-cyan-400 transition-colors"
+                      title="Read the write-up"
+                    >
+                      <FileText size={14} />
+                    </a>
+                  )}
+                  {project.github ? (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-600 hover:text-cyan-400 transition-colors"
+                    >
+                      <ExternalLink size={14} />
+                    </a>
+                  ) : (
+                    !project.writeup && (
+                      <Lock size={14} className="text-slate-700" />
+                    )
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>

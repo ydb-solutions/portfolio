@@ -56,6 +56,34 @@ export function LI({ children }: { children: ReactNode }) {
   );
 }
 
+/** Paper-style abstract: the whole argument before the narrative starts, for
+ *  readers who will not finish and readers deciding whether to. */
+export function Abstract({ children }: { children: ReactNode }) {
+  return (
+    <aside className="mb-16 rounded-xl border border-slate-800 bg-slate-900/40 p-6 md:p-7">
+      <p className="font-mono text-cyan-400 text-xs tracking-widest uppercase mb-4">
+        In brief
+      </p>
+      {children}
+    </aside>
+  );
+}
+
+export function KeyPoint({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <li className="relative pl-5 before:absolute before:left-0 before:top-[0.6em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-cyan-500/70">
+      <span className="text-slate-200 font-medium">{label}</span>{" "}
+      <span className="text-slate-400">{children}</span>
+    </li>
+  );
+}
+
 export function Callout({
   label,
   children,

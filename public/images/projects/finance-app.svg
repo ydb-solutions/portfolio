@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg-finance-app" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="glow-finance-app" cx="50%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-finance-app" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg-finance-app)"/>
+  <rect width="800" height="450" fill="url(#grid-finance-app)"/>
+  <rect width="800" height="450" fill="url(#glow-finance-app)"/>
+  <g stroke="#22d3ee" stroke-width="2" fill="none" opacity="0.9" transform="translate(400,205)">
+    
+    <rect x="-140" y="-10" width="30" height="90"/>
+    <rect x="-90" y="-50" width="30" height="130"/>
+    <rect x="-40" y="10" width="30" height="70"/>
+    <circle cx="110" cy="-40" r="46"/>
+    <line x1="110" y1="-64" x2="110" y2="-16"/>
+    <path d="M 96 -50 Q 110 -60 124 -50" opacity="0.6"/>
+
+  </g>
+  <text x="48" y="400" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="2" fill="#67e8f9" opacity="0.85">FINANCE APP</text>
+</svg>

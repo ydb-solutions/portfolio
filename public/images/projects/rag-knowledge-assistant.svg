@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg-rag-knowledge-assistant" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="glow-rag-knowledge-assistant" cx="50%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-rag-knowledge-assistant" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg-rag-knowledge-assistant)"/>
+  <rect width="800" height="450" fill="url(#grid-rag-knowledge-assistant)"/>
+  <rect width="800" height="450" fill="url(#glow-rag-knowledge-assistant)"/>
+  <g stroke="#22d3ee" stroke-width="2" fill="none" opacity="0.9" transform="translate(400,205)">
+    
+    <rect x="-120" y="-90" width="140" height="180" rx="8" opacity="0.7"/>
+    <line x1="-100" y1="-55" x2="-20" y2="-55" opacity="0.5"/>
+    <line x1="-100" y1="-25" x2="-40" y2="-25" opacity="0.5"/>
+    <line x1="-100" y1="5" x2="-10" y2="5" opacity="0.5"/>
+    <circle cx="70" cy="30" r="55"/>
+    <line x1="110" y1="70" x2="150" y2="110"/>
+
+  </g>
+  <text x="48" y="400" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="2" fill="#67e8f9" opacity="0.85">RAG ASSISTANT</text>
+</svg>

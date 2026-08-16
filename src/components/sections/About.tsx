@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { profile } from "@/lib/data";
-import { GraduationCap, Cpu, Database, Brain } from "lucide-react";
+import { Cpu, Database, Brain } from "lucide-react";
 
 const pillars = [
   {
@@ -31,11 +30,19 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="flex items-center justify-between gap-8 mb-12"
         >
-          <p className="font-mono text-cyan-400 text-sm tracking-widest uppercase mb-3">
-            About
-          </p>
-          <h2 className="text-4xl font-bold text-white mb-12">Who I am</h2>
+          <div>
+            <p className="font-mono text-cyan-400 text-sm tracking-widest uppercase mb-3">
+              About
+            </p>
+            <h2 className="text-4xl font-bold text-white">Who I am</h2>
+          </div>
+          <img
+            src="/images/profile_pic.jpg"
+            alt="Yves De Boeck"
+            className="hidden sm:block w-24 h-24 md:w-32 md:h-32 rounded-2xl object-cover border border-slate-800 shadow-lg shrink-0"
+          />
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">
@@ -46,6 +53,11 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="space-y-5 text-slate-400 leading-relaxed"
           >
+            <img
+              src="/images/profile_pic.jpg"
+              alt="Yves De Boeck"
+              className="sm:hidden w-20 h-20 rounded-2xl object-cover border border-slate-800 shadow-lg mb-2"
+            />
             <p>
               I&apos;m a Belgian engineer with a deep passion for building
               systems that work in the real world — not just on paper. My
@@ -68,21 +80,6 @@ export default function About() {
               through a platform that holds up, and into something people
               actually use.
             </p>
-
-            <div className="flex items-start gap-3 pt-4 p-4 rounded-lg bg-slate-900 border border-slate-800">
-              <GraduationCap size={20} className="text-cyan-400 mt-0.5 shrink-0" />
-              <div>
-                <p className="text-slate-200 font-medium text-sm">
-                  {profile.education.degree}
-                </p>
-                <p className="text-slate-500 text-sm">
-                  {profile.education.institution}
-                </p>
-                <p className="text-slate-500 text-sm italic mt-1">
-                  {profile.education.note}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <motion.div

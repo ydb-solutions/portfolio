@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import {
+  Abstract,
   Callout,
   Code,
   Em,
   H2,
   H3,
+  KeyPoint,
   LI,
   P,
   Pre,
@@ -39,7 +41,7 @@ export default function Post() {
         </Link>
 
         <p className="font-mono text-cyan-400 text-xs tracking-widest uppercase mb-4">
-          Data engineering · 12 min read
+          Data engineering · 20 min read
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-6">
           Every fire on Earth, every morning
@@ -49,6 +51,48 @@ export default function Post() {
           thermal anomalies a day. This is how I turn that into a globe you can
           spin — on a free Databricks tier that is not allowed to talk to NASA.
         </p>
+
+        <Abstract>
+          <Pre>{`NASA FIRMS API      3 VIIRS satellites · ~250k detections/day · CSV
+      │  06:15   GitHub Actions — the lakehouse may not call NASA
+  bronze          delete-then-insert by date; NRT revisions self-heal
+      │  07:15   dbt build (models + tests)
+  silver          dedupe on natural key · repair unpadded timestamps
+                  · index into H3 at resolutions 3, 4 and 5
+  gold            5 models: hex aggregates · daily totals · fire
+                  complexes · raw detections · cross-validation
+      │  07:45
+  published       static site + PMTiles archive — no backend at all`}</Pre>
+          <ul className="space-y-2.5 mt-5 text-[0.95rem] leading-relaxed">
+            <KeyPoint label="Ingest runs outside the lakehouse.">
+              Free Edition restricts serverless egress to an allowlist that does
+              not include NASA, so the network-touching step is a scheduled job
+              that pushes inward.
+            </KeyPoint>
+            <KeyPoint label="Idempotency is date-keyed replacement, not a cursor.">
+              Near-real-time data revises its own past; an append-only watermark
+              would accumulate stale versions of the same detection.
+            </KeyPoint>
+            <KeyPoint label="Hexagons, because cell area must be comparable.">
+              A 1°×1° box covers ~12,300 km² at the equator and ~4,200 km² at
+              70°N, which would turn every tropics-versus-boreal comparison into
+              an artifact of the projection.
+            </KeyPoint>
+            <KeyPoint label="All three H3 resolutions are indexed independently.">
+              Deriving coarse cells by truncating fine ones misattributes 7.15% of
+              points, because H3&apos;s geometric containment is only approximate.
+            </KeyPoint>
+            <KeyPoint label="The public demo has no backend.">
+              Databricks Apps cannot be made public, so answers are precomputed
+              and PMTiles turns a plain file host into a tile server via HTTP
+              range requests.
+            </KeyPoint>
+            <KeyPoint label="Total running cost: €0/month.">
+              Free tiers throughout, and the constraint improved the architecture
+              more than a budget would have.
+            </KeyPoint>
+          </ul>
+        </Abstract>
 
         <P>
           Every morning at 06:15 UTC a job wakes up, downloads the last three days
@@ -159,6 +203,91 @@ FROM read_files('/Volumes/.../detections_20260815T061500.csv',
           corrupt a year of history.
         </P>
 
+        <H2>Three layers, three different jobs</H2>
+        <P>
+          Everything downstream of that insert is a medallion architecture —
+          bronze, silver, gold — and the split is not ceremony. Each layer is
+          allowed to do exactly one kind of work, which is what makes it possible
+          to reason about where a bug can live.
+        </P>
+        <UL>
+          <LI>
+            <Em>Bronze</Em> lands the data as it arrived, typed but otherwise
+            unaltered, and fails loudly if it does not match expectations. No
+            interpretation.
+          </LI>
+          <LI>
+            <Em>Silver</Em> makes it trustworthy: deduplicated, correctly typed,
+            enriched with the keys everything downstream joins on. Still one row
+            per detection.
+          </LI>
+          <LI>
+            <Em>Gold</Em> answers questions. Every model here exists because
+            something in the UI asks for it.
+          </LI>
+        </UL>
+        <P>
+          Bronze onwards is entirely dbt, which matters for a reason beyond taste:
+          three separate projects (fires, Sentinel-2, and Mars telemetry) share one
+          dbt project, isolated by tag. The fires job runs{" "}
+          <Code>dbt build --select tag:firms</Code> and touches nothing else.
+        </P>
+
+        <H3>What silver actually cleans</H3>
+        <P>
+          One model, <Code>detections_clean</Code>, doing four things.
+        </P>
+        <P>
+          <Em>First, deduplicate on the natural key.</Em> Bronze already guarantees
+          no duplicates through delete-then-insert, so this is belt and braces —
+          but it means the natural key holds regardless of how bronze was loaded,
+          including by a future me doing a manual backfill at 11pm:
+        </P>
+        <Pre>{`qualify row_number() over (
+    partition by source, latitude, longitude,
+                 acq_date, acq_time, satellite
+    order by ingested_at desc
+) = 1`}</Pre>
+        <P>
+          Those six columns are what actually identify a detection: one satellite,
+          one pixel, one overpass. <Code>ingested_at desc</Code> keeps the most
+          recently loaded copy, which is the one reflecting NASA&apos;s latest
+          revision.
+        </P>
+        <P>
+          <Em>Second, build a real timestamp.</Em> This is where the unpadded time
+          field bites. NASA sends <Code>HHMM</Code> with leading zeros stripped, so
+          a fire detected at seven minutes past midnight arrives as the string{" "}
+          <Code>7</Code>:
+        </P>
+        <Pre>{`to_timestamp(
+    concat(cast(acq_date as string), ' ', lpad(acq_time, 4, '0')),
+    'yyyy-MM-dd HHmm'
+) as acq_datetime`}</Pre>
+        <P>
+          Without the <Code>lpad</Code>, every detection in the first ten hours of
+          each day either fails to parse or lands at the wrong hour. It is a
+          one-function fix, but the kind that produces a subtly wrong dashboard
+          rather than an error.
+        </P>
+        <P>
+          <Em>Third, index into H3</Em> at three resolutions — the next two
+          sections are about why, because it is the most interesting decision in
+          the pipeline.
+        </P>
+        <P>
+          <Em>Fourth, drop what nothing uses:</Em> scan and track geometry,
+          instrument name, algorithm version.
+        </P>
+        <Callout label="What silver deliberately does not do">
+          It does not filter. Every detection survives, including low-confidence
+          ones and the gas flares I know are not wildfires. Filtering is a
+          presentation decision, and a silver layer that bakes one in has destroyed
+          information for every future consumer who wanted a different answer. Gold
+          models that need a quality signal compute a high-confidence count
+          alongside the total instead of dropping rows.
+        </Callout>
+
         <H2>Why hexagons</H2>
         <P>
           A quarter-million points a day is too many to draw. They need
@@ -255,6 +384,140 @@ directly-assigned res-4 cell`}</Pre>
           correct one, and it cost nothing.
         </Callout>
 
+        <H2>What gold actually computes</H2>
+        <P>
+          Five models, all dbt, all rebuilt every morning — and rebuilt with{" "}
+          <Code>dbt build</Code> rather than <Code>dbt run</Code>, which is the
+          difference between running the models and running the models{" "}
+          <Em>plus their tests</Em>. Grain uniqueness and not-null assertions
+          execute on every daily run, and a failure fails the job. Silently
+          producing a duplicated hexagon is not a failure mode I want to discover
+          from the map looking wrong.
+        </P>
+
+        <H3>fires_daily_h3 — the hexagons</H3>
+        <P>
+          Three resolutions stacked into one table by a Jinja loop that unions
+          three aggregations of the same source:
+        </P>
+        <Pre>{`{% for res in [3, 4, 5] %}
+select {{ res }} as h3_res, h3_{{ res }} as h3_cell, acq_date,
+       count(*) as n_detections, sum(frp) as frp_sum,
+       sum(case when confidence = 'h' then 1 else 0 end) as n_high_conf
+from {{ ref('detections_clean') }}
+group by h3_{{ res }}, acq_date
+{% if not loop.last %}union all{% endif %}
+{% endfor %}`}</Pre>
+        <P>
+          The two Jinja expressions do different things and it is worth reading
+          them slowly: <Code>{`{{ res }}`}</Code> emits a literal (3, 4 or 5),
+          while <Code>{`h3_{{ res }}`}</Code> emits a{" "}
+          <Em>column name</Em>. So the resolution tag has three distinct values
+          across the whole table, while the cell column holds tens of thousands.
+        </P>
+        <P>
+          Stacking them means the client swaps aggregation level on zoom with one
+          query shape and a changed integer, rather than three different endpoints.
+          The grain — resolution, cell, date — is enforced by a uniqueness test, so
+          the union cannot quietly produce overlapping rows.
+        </P>
+
+        <H3>fires_daily_stats — the headline numbers</H3>
+        <P>
+          The same aggregation with the spatial dimension removed: one row per day,
+          global totals, feeding the counters above the map.
+        </P>
+        <P>
+          It looks redundant — surely you can sum the hexagons? Almost, but not
+          quite, and the exception is a nice reminder that{" "}
+          <Em>not every aggregate is additive</Em>. Detection counts and total fire
+          power roll up fine. The number of distinct satellites contributing does
+          not: summing per-cell distinct counts would count Suomi-NPP once per
+          hexagon it appears in. Distinct counts have to be computed at the grain
+          you want to read them at.
+        </P>
+
+        <H3>active_fires — the one with actual logic in it</H3>
+        <P>
+          &ldquo;Fire complexes&rdquo; over the trailing 48 hours: coarse cells with
+          at least three detections, ranked by intensity. Three decisions in here I
+          would defend in a review.
+        </P>
+        <P>
+          <Em>The window is anchored to the data, not the clock:</Em>
+        </P>
+        <Pre>{`with window_bounds as (
+    select max(acq_datetime) as latest from {{ ref('detections_clean') }}
+)`}</Pre>
+        <P>
+          Using <Code>current_timestamp()</Code> would have been the obvious move
+          and it would have been wrong twice over. Wrong for testing, because the
+          model produces different output depending on when you run it. And wrong
+          operationally: if ingest fails one morning, a wall-clock window silently
+          slides past all the data and the map goes empty, which looks like
+          &ldquo;no fires on Earth today&rdquo; rather than &ldquo;the pipeline is
+          broken&rdquo;. Anchored to the newest row, it just shows slightly older
+          data and stays obviously alive.
+        </P>
+        <P>
+          <Em>The centroid is weighted by fire power:</Em>
+        </P>
+        <Pre>{`sum(latitude * frp) / sum(frp)  as centroid_lat,
+sum(longitude * frp) / sum(frp) as centroid_lon`}</Pre>
+        <P>
+          A plain average puts the marker in the geometric middle of the
+          detections, which for a long fire front is often somewhere nothing is
+          burning. Weighting by power drags it toward the hottest part — where you
+          would actually send an aircraft. This is also why the model filters to
+          rows with positive fire power: the division needs a non-zero denominator.
+        </P>
+        <P>
+          <Em>The trend is a ratio of consecutive 24-hour halves:</Em>
+        </P>
+        <Pre>{`sum(case when acq_datetime > latest - interval 24 hours
+         then frp else 0 end)
+  / nullif(sum(case when acq_datetime <= latest - interval 24 hours
+                    then frp end), 0) as frp_trend`}</Pre>
+        <P>
+          Above 1 means growing, below means dying down. The{" "}
+          <Code>nullif</Code> matters more than it looks: a complex with no
+          activity in the previous period would divide by zero, and the honest
+          answer there is not &ldquo;infinite growth&rdquo; but{" "}
+          <Em>null</Em> — a brand-new fire with no baseline to compare against.
+          Encoding &ldquo;I cannot know this&rdquo; distinctly from a number is
+          most of what makes a metric trustworthy.
+        </P>
+        <P>
+          Finally a noise floor of at least three detections. One hot pixel is not
+          a fire complex; it is usually a factory.
+        </P>
+
+        <H3>detections_recent — a view, for an unglamorous reason</H3>
+        <P>
+          Last seven days of individual detections, unaggregated. It exists in gold
+          purely because of permissions: the app&apos;s service principal is granted
+          read access to the gold schema only, and Unity Catalog views execute with
+          their owner&apos;s privileges. The view lets the app read silver-grade
+          data without ever holding a grant on silver. Not a modelling decision at
+          all — an access-control one wearing a modelling costume.
+        </P>
+
+        <H3>s2_firms_agreement — checking one pipeline against another</H3>
+        <P>
+          The one I find most satisfying. My Sentinel-2 pipeline detects burn scars
+          optically, by measuring how vegetation reflectance changed between two
+          dates. FIRMS detects heat. Those are genuinely independent physical
+          signals from different satellites, so where they agree, confidence goes
+          up a lot.
+        </P>
+        <P>
+          This view joins them: FIRMS points falling inside a monitored region are
+          mapped onto the Sentinel-2 analysis grid and matched to burn-scar cells
+          within three days. It is a view rather than a table because the two
+          pipelines rebuild an hour apart — a table would always be showing one run
+          of stale agreement.
+        </P>
+
         <H2>Sending IDs instead of shapes</H2>
         <P>
           One detail I am fond of. The API never sends hexagon geometry to the
@@ -274,6 +537,86 @@ directly-assigned res-4 cell`}</Pre>
           <Code>591208020730445823</Code> exceeds JavaScript&apos;s safe integer
           range and would silently lose precision in transit. The hex string is the
           only safe wire format.
+        </P>
+
+        <H2>The demo has no backend at all</H2>
+        <P>
+          There is a constraint I did not see coming until I tried to share this.
+          Databricks Apps cannot be made public — anonymous access and SSO bypass
+          are unsupported, and the free tier has no identity provider to enrol
+          outside viewers through. A link to the running app shows every visitor a
+          login wall they have no way past.
+        </P>
+        <P>
+          So the globe is republished every morning as a static site instead. Worth
+          being precise about what that means, because the word is slippery: the
+          frontend was <Em>always</Em> static — a compiled bundle of HTML, CSS and
+          JavaScript. What changed is that there is no longer a{" "}
+          <Em>server process</Em> sitting next to those files. Previously one
+          uvicorn process served both the bundle and the <Code>/api/*</Code> routes
+          that queried the warehouse. Now there is a file host and nothing else.
+        </P>
+        <P>
+          That single change has a sharp consequence: nothing can answer a question
+          at request time, so every answer has to exist as a file before anyone
+          asks it.
+        </P>
+        <P>
+          For the hexagons that is easy. The UI only ever asks for three
+          resolutions across three time windows, so there are nine possible
+          answers and I pre-render all nine to JSON. For individual detections it
+          is not easy at all, because the question is &ldquo;what is inside{" "}
+          <Em>this</Em> box&rdquo; and every pan and zoom invents a new box. You
+          cannot enumerate those.
+        </P>
+
+        <H3>Changing the question</H3>
+        <P>
+          The fix is{" "}
+          <a
+            href="https://docs.protomaps.com/pmtiles/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2"
+          >
+            PMTiles
+          </a>
+          , and what I like about it is that it does not answer the hard question —
+          it replaces it with an easy one.
+        </P>
+        <P>
+          Map data is conventionally cut into tiles: a grid at each zoom level,
+          each square stored separately. That normally means hundreds of thousands
+          of files and a tile server to route between them. PMTiles packs the whole
+          pyramid into one file with an index at the front. The client reads the
+          index, works out that the tile it wants sits at a particular byte offset,
+          and asks for exactly those bytes:
+        </P>
+        <Pre>{`GET /fires.pmtiles
+Range: bytes=4182000-4190999`}</Pre>
+        <P>
+          That is an ordinary HTTP range request — the same mechanism that lets you
+          scrub into the middle of a video without downloading it. &ldquo;Which
+          detections are in this box?&rdquo; requires understanding the data.
+          &ldquo;Give me these bytes&rdquo; requires understanding nothing, which
+          is precisely why a dumb file host can serve it.
+        </P>
+        <Callout label="The version with no server is the better one">
+          The live API capped results at 10,000 detections ordered by fire power,
+          because an unbounded viewport query would have been unbounded work — the
+          UI carried a &ldquo;showing top 10k, zoom in&rdquo; badge to admit it. The
+          tiled version has no cap: all 1.75M detections are addressable, because
+          the client only ever pulls the handful of tiles under the viewport. The
+          debounce disappeared too. Removing the backend deleted code and removed a
+          limitation rather than adding one.
+        </Callout>
+        <P>
+          One wrinkle worth recording, since I got it wrong first. I assumed the
+          whole thing could sit on Cloudflare Pages. It cannot: Pages does not
+          serve range requests correctly and caps files at 25 MiB, and the archive
+          is larger than that. The tiles live on R2 — object storage, range
+          requests supported, no egress fees — while Pages serves the bundle and
+          the small JSON. Two hosts, still nothing to operate, still zero a month.
         </P>
 
         <H2>What I would change</H2>
@@ -300,6 +643,17 @@ directly-assigned res-4 cell`}</Pre>
           fixture asserting both implementations agree is the real fix; a code
           comment is what is there now.
         </P>
+        <P>
+          The third is not a weakness so much as a ceiling. Precomputing every
+          answer works because the questions are few and known — nine hex slices
+          and a fixed tile pyramid. It stops working the moment someone wants to
+          ask something I did not anticipate: filter by satellite, compare two
+          arbitrary date ranges, draw their own region of interest. That is the
+          point at which I would put the API back, on Cloud Run with a real
+          database and a cache in front, and keep the tiles for the bulk geometry.
+          I would rather arrive there because a question demanded it than start
+          there because it felt more like architecture.
+        </P>
 
         <H2>The stack</H2>
         <UL>
@@ -318,8 +672,14 @@ directly-assigned res-4 cell`}</Pre>
             project without colliding. H3 via native Databricks SQL functions.
           </LI>
           <LI>
-            <Em>Serving:</Em> FastAPI + React 19, MapLibre GL globe projection,
-            h3-js for client-side geometry.
+            <Em>Serving:</Em> React 19 and MapLibre GL globe projection, h3-js for
+            client-side geometry. FastAPI behind it in the workspace app; nothing
+            behind it in the public one.
+          </LI>
+          <LI>
+            <Em>Publishing:</Em> tippecanoe builds the tile archive; Cloudflare
+            Pages serves the bundle, R2 serves the tiles. Republished daily by a
+            scheduled workflow.
           </LI>
           <LI>
             <Em>Infrastructure:</Em> Terraform for workspace objects, Databricks
